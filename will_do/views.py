@@ -13,8 +13,12 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     return render(request, 'will_do/home.html')
 
+
+    
 def signupuser(request):
-    if request.method == 'GET':
+    if request.user.is_authenticated:
+        return redirect('currentwilldo')
+    elif request.method == 'GET':
         return render(request,'will_do/signupuser.html', {'form':UserCreationForm()})
     else: 
         if request.POST['password1'] == request.POST['password2']:
