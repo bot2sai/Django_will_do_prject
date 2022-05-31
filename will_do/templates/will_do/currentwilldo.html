@@ -1,0 +1,31 @@
+{% extends 'will_do/base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-10">
+        {% if willdo %}
+             <h1>{{ willdo.count }} Current Todo{{ willdo.count|pluralize }}</h1>
+        {% else %}
+                       <h1>Current Todos</h1>
+        {% endif %}
+    </div>
+</div>
+<div class="row justify-content-center mt-5">
+    <div class="col-md-10">
+    {% if willdos %}
+        <div class="list-group">
+            {% for willdo in willdos %}
+                <a href="{% url 'viewwilldo' willdo.id %}" class="list-group-item list-group-item-action{% if willdo.important %} list-group-item-danger{% endif %}"><b>{{ willdo.title }}</b>{% if willdo.task %} - {{ willdo.task|truncatechars:30 }}{% endif %}</a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center">
+            <h2>Looks like you don't have any todos! Nice work.</h2>
+        <br>
+        <a role="button" class="btn btn-primary" href="{% url 'createwilldo' %}">New Todo</a>
+        </div>
+    {% endif %}
+    </div>
+</div>
+{% endblock %}
